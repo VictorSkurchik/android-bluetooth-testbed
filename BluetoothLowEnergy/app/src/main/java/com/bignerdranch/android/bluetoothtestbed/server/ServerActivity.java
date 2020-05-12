@@ -190,7 +190,7 @@ public class ServerActivity extends AppCompatActivity implements GattServerActio
 
         ParcelUuid parcelUuid = new ParcelUuid(SERVICE_UUID);
         AdvertiseData data = new AdvertiseData.Builder()
-                .setIncludeDeviceName(true)
+                .setIncludeDeviceName(false)
                 .addServiceUuid(parcelUuid)
                 .build();
 
