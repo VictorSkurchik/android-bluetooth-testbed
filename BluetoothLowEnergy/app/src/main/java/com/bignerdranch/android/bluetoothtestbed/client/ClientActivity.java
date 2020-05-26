@@ -122,7 +122,7 @@ public class ClientActivity extends AppCompatActivity implements GattClientActio
         filters.add(scanFilter);
 
         ScanSettings settings = new ScanSettings.Builder()
-                .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER)
+                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                 .build();
 
         mBluetoothLeScanner.startScan(filters, settings, mScanCallback);

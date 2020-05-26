@@ -111,7 +111,7 @@ public class ServerActivity extends AppCompatActivity implements GattServerActio
 
         @SuppressLint("HardwareIds")
         String deviceInfo = "Device Info"
-                + "\nName: "+ mBluetoothAdapter.getName()
+                + "\nName: " + mBluetoothAdapter.getName()
                 + "\nAddress: " + mBluetoothAdapter.getAddress();
         mBinding.serverDeviceInfoTextView.setText(deviceInfo);
 
@@ -127,26 +127,21 @@ public class ServerActivity extends AppCompatActivity implements GattServerActio
     }
 
     // GattServer
-
     private void setupServer() {
         BluetoothGattService service = new BluetoothGattService(SERVICE_UUID,
                 BluetoothGattService.SERVICE_TYPE_PRIMARY);
 
-        // Write characteristic
+        //wifiCharacteristic json: ssid password settings (channel, security)
         BluetoothGattCharacteristic writeCharacteristic = new BluetoothGattCharacteristic(
                 CHARACTERISTIC_ECHO_UUID,
-                BluetoothGattCharacteristic.PROPERTY_WRITE,
-                        // Somehow this is not necessary, the client can still enable notifications
-//                        | BluetoothGattCharacteristic.PROPERTY_NOTIFY,
-                BluetoothGattCharacteristic.PERMISSION_WRITE);
+                BluetoothGattCharacteristic.PROPERTY_READ | BluetoothGattCharacteristic.PROPERTY_WRITE | BluetoothGattCharacteristic.PROPERTY_NOTIFY,
+                BluetoothGattCharacteristic.PERMISSION_READ | BluetoothGattCharacteristic.PERMISSION_WRITE);
 
-        // Characteristic with Descriptor
+        //statusCharacteristic Result: WifiResult(ResultType.SUCCESS/ERROR, Error(code, msg))
         BluetoothGattCharacteristic notifyCharacteristic = new BluetoothGattCharacteristic(
                 CHARACTERISTIC_TIME_UUID,
-                // Somehow this is not necessary, the client can still enable notifications
-//                BluetoothGattCharacteristic.PROPERTY_NOTIFY,
-                0,
-                0);
+                BluetoothGattCharacteristic.PROPERTY_READ | BluetoothGattCharacteristic.PROPERTY_WRITE | BluetoothGattCharacteristic.PROPERTY_NOTIFY,
+                BluetoothGattCharacteristic.PERMISSION_READ | BluetoothGattCharacteristic.PERMISSION_WRITE);
 
         BluetoothGattDescriptor clientConfigurationDescriptor = new BluetoothGattDescriptor(
                 CLIENT_CONFIGURATION_DESCRIPTOR_UUID,
